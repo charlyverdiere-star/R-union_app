@@ -1,0 +1,13 @@
+{
+  "name": "Assistant de réunions",
+  "short_name": "Réunions",
+  "description": "Enregistrement et compte rendu automatique de réunions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#1f3a5f",
+  "lang": "fr",
+  "icons": [
+    { "src": "/icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

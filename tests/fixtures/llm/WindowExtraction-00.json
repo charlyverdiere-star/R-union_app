@@ -1,0 +1,547 @@
+{
+ "topics": [
+  {
+   "title": "Incidents de production de la semaine",
+   "summary": "Trois incidents majeurs sur le cluster Kubernetes, lies à la mémoire des pods de facturation et à la saturation des connexions PostgreSQL. Analyse de la cause racine et mesures correctives.",
+   "segment_ids": [
+    "s0002",
+    "s0003",
+    "s0004",
+    "s0005",
+    "s0006",
+    "s0007",
+    "s0008",
+    "s0009",
+    "s0010",
+    "s0011",
+    "s0012",
+    "s0013"
+   ]
+  },
+  {
+   "title": "Budget infrastructure et rétention des logs",
+   "summary": "Dépassement du budget mensuel du fait du stockage des logs. Deux pistes examinées : réduction de la durée de rétention, sous réserve juridique, et bascule vers du stockage froid.",
+   "segment_ids": [
+    "s0014",
+    "s0015",
+    "s0016",
+    "s0017",
+    "s0018",
+    "s0019",
+    "s0020",
+    "s0021",
+    "s0022"
+   ]
+  },
+  {
+   "title": "Mise en production de la version 2.4",
+   "summary": "La date du 30 octobre est remise en cause par l'état de la chaîne d'intégration continue. La décision est reportee après diagnostic.",
+   "segment_ids": [
+    "s0023",
+    "s0024",
+    "s0025",
+    "s0026",
+    "s0027",
+    "s0028",
+    "s0029",
+    "s0030"
+   ]
+  }
+ ],
+ "key_points": [
+  {
+   "statement": "Trois incidents majeurs sont survenus entre lundi et jeudi, tous sur le cluster Kubernetes de production.",
+   "kind": "fait",
+   "segment_ids": [
+    "s0002"
+   ],
+   "quote": "On a eu trois incidents majeurs entre lundi et jeudi, tous les trois sur le cluster Kubernetes de production."
+  },
+  {
+   "statement": "Le SLA contractuel signé avec le client est de 99,5 pour cent.",
+   "kind": "contrainte",
+   "segment_ids": [
+    "s0004"
+   ],
+   "quote": "le SLA qu'on a signé avec le client c'est 99,5 pour cent"
+  },
+  {
+   "statement": "L'indisponibilité cumulée du mois atteint 47 minutes, ce qui laisse une marge faible sur le SLA.",
+   "kind": "chiffre",
+   "segment_ids": [
+    "s0005"
+   ],
+   "quote": "On est à 47 minutes d'indisponibilité cumulée sur le mois."
+  },
+  {
+   "statement": "Le temps de réponse moyen relevé dans Grafana est passé de 400 millisecondes à 2,4 secondes pendant les pics.",
+   "kind": "chiffre",
+   "segment_ids": [
+    "s0005"
+   ],
+   "quote": "Grafana montre un temps de réponse moyen qui est passé de 400 millisecondes à 2,4 secondes pendant les pics."
+  },
+  {
+   "statement": "Le pool de connexions PostgreSQL est configuré à 100, valeur jugée trop basse pour le trafic actuel.",
+   "kind": "technique",
+   "segment_ids": [
+    "s0007"
+   ],
+   "quote": "Le pool de connexions est configuré à 100, ce qui est trop bas pour le trafic actuel."
+  },
+  {
+   "statement": "Deux requêtes de reporting ne sont pas indexées et monopolisent une connexion pendant plusieurs secondes.",
+   "kind": "technique",
+   "segment_ids": [
+    "s0007"
+   ],
+   "quote": "il y a aussi deux requêtes de reporting qui ne sont pas indexées et qui tiennent la connexion pendant plusieurs secondes"
+  },
+  {
+   "statement": "Le budget infrastructure mensuel prévu était de 1 200 euros ; il a atteint 1 850 euros sur le dernier trimestre.",
+   "kind": "chiffre",
+   "segment_ids": [
+    "s0014"
+   ],
+   "quote": "On avait budgété 1 200 euros par mois et on est monté à 1 850 euros sur le dernier trimestre."
+  },
+  {
+   "statement": "Les logs applicatifs sont conservés 365 jours, alors que l'obligation réglementaire évoquée est de 90 jours.",
+   "kind": "contrainte",
+   "segment_ids": [
+    "s0015"
+   ],
+   "quote": "On garde les logs applicatifs pendant 365 jours alors que l'obligation réglementaire est de 90 jours chez nous."
+  },
+  {
+   "statement": "L'objectif annoncé est de redescendre sous les 1 400 euros mensuels.",
+   "kind": "chiffre",
+   "segment_ids": [
+    "s0022"
+   ],
+   "quote": "L'objectif c'est de redescendre sous les 1 400 euros mensuels."
+  },
+  {
+   "statement": "La chaîne d'intégration continue est en échec depuis mardi, avec 18 tests qui échouent.",
+   "kind": "fait",
+   "segment_ids": [
+    "s0024"
+   ],
+   "quote": "La chaîne de CI est rouge depuis mardi, on à 18 tests qui échouent"
+  },
+  {
+   "statement": "La mise en production de la version 2.4 était prévue le 30 octobre.",
+   "kind": "reference",
+   "segment_ids": [
+    "s0023"
+   ],
+   "quote": "la mise en production de la version 2.4. On avait dit le 30 octobre"
+  },
+  {
+   "statement": "Le budget mensuel a été ramené à 900 euros grâce à la renégociation du contrat.",
+   "kind": "chiffre",
+   "segment_ids": [
+    "s0014"
+   ],
+   "quote": "renégociation du contrat"
+  }
+ ],
+ "problems": [
+  {
+   "statement": "Saturation des connexions de la base PostgreSQL, à l'origine de deux des trois incidents.",
+   "causes": [
+    "Pool de connexions dimensionne à 100, trop bas pour le trafic actuel",
+    "Deux requêtes de reporting non indexées qui retiennent les connexions"
+   ],
+   "segment_ids": [
+    "s0003",
+    "s0007"
+   ],
+   "quote": "c'est la base PostgreSQL qui a saturé ses connexions"
+  },
+  {
+   "statement": "Problème de mémoire sur les pods de l'API de facturation, à l'origine du premier incident.",
+   "causes": [],
+   "segment_ids": [
+    "s0003"
+   ],
+   "quote": "Le premier c'était un problème de mémoire sur les pods de l'API de facturation."
+  },
+  {
+   "statement": "Dépassement du budget infrastructure, attribué au volume de stockage des logs.",
+   "causes": [
+    "Rétention des logs applicatifs sur 365 jours"
+   ],
+   "segment_ids": [
+    "s0014",
+    "s0015"
+   ],
+   "quote": "C'est le stockage qui a explosé."
+  },
+  {
+   "statement": "La chaîne d'intégration continue est rouge depuis mardi, sans cause identifiée à ce stade.",
+   "causes": [],
+   "segment_ids": [
+    "s0024"
+   ],
+   "quote": "La chaîne de CI est rouge depuis mardi, on à 18 tests qui échouent et je n'ai pas encore identifié pourquoi."
+  }
+ ],
+ "solutions": [
+  {
+   "statement": "Porter le pool de connexions PostgreSQL de 100 à 300.",
+   "status": "retenue",
+   "segment_ids": [
+    "s0009",
+    "s0012"
+   ],
+   "quote": "on passe le pool à 300 dès cette semaine, c'est du paramétrage"
+  },
+  {
+   "statement": "Ajouter les index manquants sur les requêtes de reporting, en mode CREATE INDEX CONCURRENTLY et pendant la fenêtre de maintenance.",
+   "status": "retenue",
+   "segment_ids": [
+    "s0009",
+    "s0011",
+    "s0012"
+   ],
+   "quote": "je ferai ça en CREATE INDEX CONCURRENTLY, et je programmerai ça sur la fenêtre de maintenance de dimanche"
+  },
+  {
+   "statement": "Réduire la durée de rétention des logs applicatifs de 365 à 90 jours.",
+   "status": "etudiee",
+   "segment_ids": [
+    "s0015",
+    "s0017"
+   ],
+   "quote": "On met ça en attente de la réponse du juridique."
+  },
+  {
+   "statement": "Basculer les logs de plus de 30 jours sur du stockage froid, moins coûteux.",
+   "status": "retenue",
+   "segment_ids": [
+    "s0019",
+    "s0020"
+   ],
+   "quote": "c'est de passer les logs de plus de 30 jours sur du stockage froid"
+  },
+  {
+   "statement": "Livrer un périmètre reduit à la date initialement prévue.",
+   "status": "proposee",
+   "segment_ids": [
+    "s0027"
+   ],
+   "quote": "on pourrait livrer un périmètre réduit à la date prévue"
+  },
+  {
+   "statement": "Décaler la mise en production d'une semaine.",
+   "status": "proposee",
+   "segment_ids": [
+    "s0026"
+   ],
+   "quote": "Je préfère qu'on décale d'une semaine"
+  }
+ ],
+ "decisions": [
+  {
+   "statement": "Le pool de connexions PostgreSQL passe à 300 des cette semaine et les index manquants sont créés dimanche prochain pendant la fenêtre de maintenance.",
+   "rationale": "Traiter à la fois le dimensionnement du pool et la cause de fond que constituent les requêtes non indexées.",
+   "stakeholders": [
+    "Thomas"
+   ],
+   "conditions": "La création des index doit se faire en mode concurrent, pendant la fenêtre de maintenance, pour ne pas bloquer la table.",
+   "explicitness": "explicite",
+   "segment_ids": [
+    "s0012"
+   ],
+   "quote": "on décide ça : le pool passe à 300 cette semaine et les index sont créés dimanche prochain pendant la fenêtre de maintenance"
+  },
+  {
+   "statement": "La décision sur la date de mise en production de la version 2.4 est reportee au point du jeudi.",
+   "rationale": "L'état de la chaîne d'intégration continue ne permet pas de se prononcer ; un diagnostic de 48 heures est nécessaire.",
+   "stakeholders": [],
+   "conditions": null,
+   "explicitness": "explicite",
+   "segment_ids": [
+    "s0028",
+    "s0029"
+   ],
+   "quote": "La décision sur la date de mise en production est reportée à jeudi."
+  },
+  {
+   "statement": "La réduction de la rétention des logs à 90 jours est suspendue dans l'attente de la réponse du service juridique.",
+   "rationale": "Un doute subsiste sur l'application du délai de 90 jours a tous les types de logs, notamment au regard du RGPD pour les logs d'accès.",
+   "stakeholders": [],
+   "conditions": "Validation préalable du service juridique.",
+   "explicitness": "explicite",
+   "segment_ids": [
+    "s0016",
+    "s0017"
+   ],
+   "quote": "je ne veux pas supprimer des données sans validation. On met ça en attente de la réponse du juridique."
+  },
+  {
+   "statement": "Le pool de connexions est porté à 500 connexions simultanées.",
+   "rationale": "Dimensionnement cible validé en séance.",
+   "stakeholders": [],
+   "conditions": null,
+   "explicitness": "explicite",
+   "segment_ids": [
+    "s0012"
+   ],
+   "quote": "le pool passe à 500"
+  },
+  {
+   "statement": "Le contrat de maintenance avec le prestataire est résilié.",
+   "rationale": null,
+   "stakeholders": [],
+   "conditions": null,
+   "explicitness": "explicite",
+   "segment_ids": [
+    "s9999"
+   ],
+   "quote": "résiliation du contrat"
+  }
+ ],
+ "actions": [
+  {
+   "task": "Porter le pool de connexions PostgreSQL à 300.",
+   "owner": "Thomas",
+   "due": "cette semaine",
+   "priority": "haute",
+   "dependencies": [],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0009",
+    "s0012"
+   ],
+   "quote": "on passe le pool à 300 dès cette semaine"
+  },
+  {
+   "task": "Créer les index manquants en mode CREATE INDEX CONCURRENTLY pendant la fenêtre de maintenance de dimanche.",
+   "owner": "Thomas",
+   "due": "dimanche prochain",
+   "priority": "haute",
+   "dependencies": [
+    "Fenêtre de maintenance de dimanche"
+   ],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0011",
+    "s0012"
+   ],
+   "quote": "je programmerai ça sur la fenêtre de maintenance de dimanche"
+  },
+  {
+   "task": "Faire un retour sur l'évolution des temps de réponse après les corrections.",
+   "owner": "Thomas",
+   "due": "le lundi suivant",
+   "priority": null,
+   "dependencies": [],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0013"
+   ],
+   "quote": "Je ferai un retour sur les temps de réponse le lundi suivant."
+  },
+  {
+   "task": "Interroger le service juridique sur la durée de rétention applicable aux différents types de logs.",
+   "owner": null,
+   "due": null,
+   "priority": null,
+   "dependencies": [],
+   "blockers": [
+    "Disponibilite du service juridique"
+   ],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0018"
+   ],
+   "quote": "Je prends l'action de poser la question au juridique. Par contre je ne peux pas te garantir de date"
+  },
+  {
+   "task": "Basculer les logs de plus de 30 jours vers du stockage froid.",
+   "owner": "Thomas",
+   "due": "semaine prochaine",
+   "priority": null,
+   "dependencies": [],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0021",
+    "s0022"
+   ],
+   "quote": "on dit semaine prochaine, sans date précise"
+  },
+  {
+   "task": "Diagnostiquer les 18 tests en échec de la chaîne d'intégration continue.",
+   "owner": "Thomas",
+   "due": "sous 48 heures",
+   "priority": "haute",
+   "dependencies": [],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0028"
+   ],
+   "quote": "Laisse-moi 48 heures pour diagnostiquer la CI"
+  },
+  {
+   "task": "Prévenir le client que la date de mise en production n'est pas confirmée.",
+   "owner": null,
+   "due": "demain matin",
+   "priority": null,
+   "dependencies": [],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0030"
+   ],
+   "quote": "Je m'en charge, je l'appelle demain matin."
+  },
+  {
+   "task": "Organiser un point de suivi jeudi pour statuer sur la date de mise en production.",
+   "owner": null,
+   "due": "jeudi",
+   "priority": null,
+   "dependencies": [
+    "Diagnostic de la chaîne d'intégration continue"
+   ],
+   "blockers": [],
+   "commitment": "ferme",
+   "segment_ids": [
+    "s0028",
+    "s0029"
+   ],
+   "quote": "on refait un point jeudi avec une vraie visibilité"
+  }
+ ],
+ "open_questions": [
+  {
+   "question": "Quelle durée de rétention s'applique reellement à chaque type de log, notamment aux logs d'accès au regard du RGPD ?",
+   "kind": "a verifier",
+   "segment_ids": [
+    "s0016"
+   ],
+   "quote": "il y a peut-être une contrainte RGPD différente sur les logs d'accès"
+  },
+  {
+   "question": "Quelle est la cause des 18 tests en échec de la chaîne d'intégration continue ?",
+   "kind": "sans reponse",
+   "segment_ids": [
+    "s0024"
+   ],
+   "quote": "je n'ai pas encore identifié pourquoi"
+  },
+  {
+   "question": "La mise en production du 30 octobre est-elle maintenue, décalée, ou livree en périmètre reduit ?",
+   "kind": "a reprendre",
+   "segment_ids": [
+    "s0027",
+    "s0029"
+   ],
+   "quote": "La décision sur la date de mise en production est reportée à jeudi."
+  },
+  {
+   "question": "Quel est le sujet évoqué en fin de réunion au sujet du prestataire ?",
+   "kind": "a reprendre",
+   "segment_ids": [
+    "s0031",
+    "s0032"
+   ],
+   "quote": "le truc dont on avait parlé, là, avec le prestataire"
+  }
+ ],
+ "risks": [
+  {
+   "statement": "La marge sur le SLA de 99,5 pour cent est faible après 47 minutes d'indisponibilité cumulée ; un nouvel incident ferait basculer l'engagement.",
+   "kind": "risque",
+   "segment_ids": [
+    "s0004",
+    "s0005"
+   ],
+   "quote": "On est à 47 minutes d'indisponibilité cumulée sur le mois. Donc on tient encore le SLA, mais la marge est faible."
+  },
+  {
+   "statement": "La création des index peut bloquer la table si elle n'est pas réalisée en mode concurrent.",
+   "kind": "risque",
+   "segment_ids": [
+    "s0010"
+   ],
+   "quote": "sur une table de cette taille la création d'index peut bloquer la table"
+  },
+  {
+   "statement": "Le client a communiqué la date du 30 octobre auprès de ses utilisateurs, ce qui rend un report sensible.",
+   "kind": "difficulte",
+   "segment_ids": [
+    "s0025"
+   ],
+   "quote": "le client a communiqué sur cette date auprès de ses utilisateurs"
+  },
+  {
+   "statement": "Mettre en production avec une chaîne d'intégration continue en échec exposerait à un quatrième incident.",
+   "kind": "risque",
+   "segment_ids": [
+    "s0026"
+   ],
+   "quote": "sortir avec une CI rouge c'est prendre le risque d'un quatrième incident"
+  },
+  {
+   "statement": "L'action sur la rétention des logs depend de la disponibilite du service juridique, sans échéance maîtrisée.",
+   "kind": "dependance",
+   "segment_ids": [
+    "s0018"
+   ],
+   "quote": "je ne peux pas te garantir de date, ça dépend de leur disponibilité"
+  }
+ ],
+ "disagreements": [
+  {
+   "statement": "Désaccord non tranché sur la suite a donner à la mise en production : livrer un périmètre reduit à la date prévue, ou décaler d'une semaine le temps de rétablir la chaîne d'intégration continue.",
+   "segment_ids": [
+    "s0026",
+    "s0027"
+   ],
+   "quote": "Je ne suis pas complètement d'accord, on pourrait livrer un périmètre réduit à la date prévue. Mais je ne vais pas trancher tout seul."
+  },
+  {
+   "statement": "Réserve exprimée sur la durée de rétention de 90 jours, qui pourrait ne pas s'appliquer uniformément a tous les types de logs.",
+   "segment_ids": [
+    "s0016"
+   ],
+   "quote": "Je ne suis pas certain que 90 jours s'applique à tous les types de logs"
+  }
+ ],
+ "participants": [
+  {
+   "label": "Locuteur 1",
+   "name": null,
+   "role": "Anime la réunion et suit la relation client",
+   "segment_ids": [
+    "s0001",
+    "s0004",
+    "s0012"
+   ]
+  },
+  {
+   "label": "Locuteur 2",
+   "name": "Thomas",
+   "role": "Prend en charge les sujets techniques et l'infrastructure",
+   "segment_ids": [
+    "s0006",
+    "s0009"
+   ]
+  }
+ ],
+ "unclear_passages": [
+  {
+   "description": "Fin de réunion : un sujet concernant un prestataire est évoqué de maniere incomplete et reste incomprehensible.",
+   "segment_ids": [
+    "s0031"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,38 @@
+[project]
+name = "meeting-assistant"
+version = "1.0.0"
+description = "Assistant d'enregistrement et de compte rendu de reunions"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    "python-multipart>=0.0.9",
+    "python-docx>=1.1",
+    "reportlab>=4.2",
+    "anthropic>=1.0",
+    "httpx2>=0.0.1",
+]
+
+[project.optional-dependencies]
+local = ["faster-whisper>=1.0"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "playwright>=1.47",
+]
+
+[project.scripts]
+meeting-assistant = "backend.app.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+filterwarnings = ["ignore::DeprecationWarning"]
+markers = [
+    "navigateur: parcours complet piloté par navigateur (lent, nécessite Playwright et l'interface compilée)",
+]
+
+[tool.setuptools.packages.find]
+include = ["backend*"]

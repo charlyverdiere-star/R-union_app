@@ -1,0 +1,369 @@
+{
+ "subject": "Point d'avancement hebdomadaire : incidents de production, budget infrastructure et préparation de la mise en production de la version 2.4.",
+ "missing_information": [
+  "Les noms des participants ne sont pas tous prononces : seul « Thomas » est identifiable.",
+  "Le sujet évoqué en fin de réunion concernant un prestataire n'a pas pu être reconstitué.",
+  "Aucune date ferme n'a pu être fixee pour la sollicitation du service juridique."
+ ],
+ "topics": [
+  {
+   "title": "Incidents de production de la semaine",
+   "summary": "Trois incidents majeurs sur le cluster Kubernetes, lies à la mémoire des pods de facturation et à la saturation des connexions PostgreSQL. Analyse de la cause racine et mesures correctives decidees.",
+   "member_ids": [
+    "t1"
+   ],
+   "related_titles": [
+    "Mise en production de la version 2.4"
+   ]
+  },
+  {
+   "title": "Budget infrastructure et rétention des logs",
+   "summary": "Dépassement du budget mensuel du fait du volume de logs conservés. Deux pistes examinées : réduction de la durée de rétention, suspendue à un avis juridique, et bascule vers du stockage froid.",
+   "member_ids": [
+    "t2"
+   ],
+   "related_titles": []
+  },
+  {
+   "title": "Mise en production de la version 2.4",
+   "summary": "La date du 30 octobre est remise en cause par l'état de la chaîne d'intégration continue. La décision est reportee après un diagnostic de 48 heures.",
+   "member_ids": [
+    "t3"
+   ],
+   "related_titles": [
+    "Incidents de production de la semaine"
+   ]
+  }
+ ],
+ "key_points": [
+  {
+   "canonical": "Trois incidents majeurs sont survenus entre lundi et jeudi, tous sur le cluster Kubernetes de production.",
+   "member_ids": [
+    "k1"
+   ]
+  },
+  {
+   "canonical": "Le SLA contractuel signé avec le client est de 99,5 pour cent.",
+   "member_ids": [
+    "k2"
+   ]
+  },
+  {
+   "canonical": "L'indisponibilité cumulée du mois atteint 47 minutes, ce qui laisse une marge faible sur le SLA.",
+   "member_ids": [
+    "k3"
+   ]
+  },
+  {
+   "canonical": "Le temps de réponse moyen relevé dans Grafana est passé de 400 millisecondes à 2,4 secondes pendant les pics.",
+   "member_ids": [
+    "k4"
+   ]
+  },
+  {
+   "canonical": "Le pool de connexions PostgreSQL est configuré à 100, valeur jugée trop basse pour le trafic actuel.",
+   "member_ids": [
+    "k5"
+   ]
+  },
+  {
+   "canonical": "Deux requêtes de reporting ne sont pas indexées et monopolisent une connexion pendant plusieurs secondes.",
+   "member_ids": [
+    "k6"
+   ]
+  },
+  {
+   "canonical": "Le budget infrastructure mensuel prévu était de 1 200 euros ; il a atteint 1 850 euros sur le dernier trimestre.",
+   "member_ids": [
+    "k7"
+   ]
+  },
+  {
+   "canonical": "Les logs applicatifs sont conservés 365 jours, alors que l'obligation réglementaire évoquée est de 90 jours.",
+   "member_ids": [
+    "k8"
+   ]
+  },
+  {
+   "canonical": "La chaîne d'intégration continue est en échec depuis mardi, avec 18 tests qui échouent.",
+   "member_ids": [
+    "k10"
+   ]
+  },
+  {
+   "canonical": "La mise en production de la version 2.4 était prévue le 30 octobre.",
+   "member_ids": [
+    "k11"
+   ]
+  },
+  {
+   "canonical": "Le budget mensuel a été ramené à 900 euros grâce à la renégociation du contrat.",
+   "member_ids": [
+    "k12"
+   ]
+  }
+ ],
+ "problems": [
+  {
+   "canonical": "Saturation des connexions de la base PostgreSQL, à l'origine de deux des trois incidents.",
+   "member_ids": [
+    "p1"
+   ]
+  },
+  {
+   "canonical": "Problème de mémoire sur les pods de l'API de facturation, à l'origine du premier incident.",
+   "member_ids": [
+    "p2"
+   ]
+  },
+  {
+   "canonical": "Dépassement du budget infrastructure, attribué au volume de stockage des logs.",
+   "member_ids": [
+    "p3"
+   ]
+  },
+  {
+   "canonical": "La chaîne d'intégration continue est rouge depuis mardi, sans cause identifiée à ce stade.",
+   "member_ids": [
+    "p4"
+   ]
+  }
+ ],
+ "solutions": [
+  {
+   "canonical": "Porter le pool de connexions PostgreSQL de 100 à 300.",
+   "member_ids": [
+    "s1"
+   ]
+  },
+  {
+   "canonical": "Ajouter les index manquants sur les requêtes de reporting, en mode CREATE INDEX CONCURRENTLY et pendant la fenêtre de maintenance.",
+   "member_ids": [
+    "s2"
+   ]
+  },
+  {
+   "canonical": "Réduire la durée de rétention des logs applicatifs de 365 à 90 jours.",
+   "member_ids": [
+    "s3"
+   ]
+  },
+  {
+   "canonical": "Basculer les logs de plus de 30 jours sur du stockage froid, moins coûteux.",
+   "member_ids": [
+    "s4"
+   ]
+  },
+  {
+   "canonical": "Livrer un périmètre reduit à la date initialement prévue.",
+   "member_ids": [
+    "s5"
+   ]
+  },
+  {
+   "canonical": "Décaler la mise en production d'une semaine.",
+   "member_ids": [
+    "s6"
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "canonical": "Le pool de connexions PostgreSQL passe à 300 des cette semaine et les index manquants sont créés dimanche prochain pendant la fenêtre de maintenance.",
+   "member_ids": [
+    "d1"
+   ]
+  },
+  {
+   "canonical": "La réduction de la rétention des logs à 90 jours est suspendue dans l'attente de la réponse du service juridique.",
+   "member_ids": [
+    "d3"
+   ]
+  },
+  {
+   "canonical": "La décision sur la date de mise en production de la version 2.4 est reportee au point du jeudi.",
+   "member_ids": [
+    "d2"
+   ]
+  },
+  {
+   "canonical": "Le pool de connexions est porté à 500 connexions simultanées.",
+   "member_ids": [
+    "d4"
+   ]
+  },
+  {
+   "canonical": "Le contrat de maintenance avec le prestataire est résilié.",
+   "member_ids": [
+    "d5"
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "canonical": "Porter le pool de connexions PostgreSQL à 300.",
+   "member_ids": [
+    "a1"
+   ]
+  },
+  {
+   "canonical": "Créer les index manquants en mode CREATE INDEX CONCURRENTLY pendant la fenêtre de maintenance de dimanche.",
+   "member_ids": [
+    "a2"
+   ]
+  },
+  {
+   "canonical": "Faire un retour sur l'évolution des temps de réponse après les corrections.",
+   "member_ids": [
+    "a3"
+   ]
+  },
+  {
+   "canonical": "Interroger le service juridique sur la durée de rétention applicable aux différents types de logs.",
+   "member_ids": [
+    "a4"
+   ]
+  },
+  {
+   "canonical": "Basculer les logs de plus de 30 jours vers du stockage froid.",
+   "member_ids": [
+    "a5"
+   ]
+  },
+  {
+   "canonical": "Diagnostiquer les 18 tests en échec de la chaîne d'intégration continue.",
+   "member_ids": [
+    "a6"
+   ]
+  },
+  {
+   "canonical": "Prévenir le client que la date de mise en production n'est pas confirmée.",
+   "member_ids": [
+    "a7"
+   ]
+  },
+  {
+   "canonical": "Organiser un point de suivi jeudi pour statuer sur la date de mise en production.",
+   "member_ids": [
+    "a8"
+   ]
+  }
+ ],
+ "open_questions": [
+  {
+   "canonical": "Quelle durée de rétention s'applique reellement à chaque type de log, notamment aux logs d'accès au regard du RGPD ?",
+   "member_ids": [
+    "q1"
+   ]
+  },
+  {
+   "canonical": "Quelle est la cause des 18 tests en échec de la chaîne d'intégration continue ?",
+   "member_ids": [
+    "q2"
+   ]
+  },
+  {
+   "canonical": "La mise en production du 30 octobre est-elle maintenue, décalée, ou livree en périmètre reduit ?",
+   "member_ids": [
+    "q3"
+   ]
+  },
+  {
+   "canonical": "Quel est le sujet évoqué en fin de réunion au sujet du prestataire ?",
+   "member_ids": [
+    "q4"
+   ]
+  }
+ ],
+ "risks": [
+  {
+   "canonical": "La marge sur le SLA de 99,5 pour cent est faible après 47 minutes d'indisponibilité cumulée ; un nouvel incident ferait basculer l'engagement.",
+   "member_ids": [
+    "r1"
+   ]
+  },
+  {
+   "canonical": "La création des index peut bloquer la table si elle n'est pas réalisée en mode concurrent.",
+   "member_ids": [
+    "r2"
+   ]
+  },
+  {
+   "canonical": "Le client a communiqué la date du 30 octobre auprès de ses utilisateurs, ce qui rend un report sensible.",
+   "member_ids": [
+    "r3"
+   ]
+  },
+  {
+   "canonical": "Mettre en production avec une chaîne d'intégration continue en échec exposerait à un quatrième incident.",
+   "member_ids": [
+    "r4"
+   ]
+  },
+  {
+   "canonical": "L'action sur la rétention des logs depend de la disponibilite du service juridique, sans échéance maîtrisée.",
+   "member_ids": [
+    "r5"
+   ]
+  }
+ ],
+ "disagreements": [
+  {
+   "canonical": "Désaccord non tranché sur la suite a donner à la mise en production : livrer un périmètre reduit à la date prévue, ou décaler d'une semaine le temps de rétablir la chaîne d'intégration continue.",
+   "member_ids": [
+    "g1"
+   ]
+  },
+  {
+   "canonical": "Réserve exprimée sur la durée de rétention de 90 jours, qui pourrait ne pas s'appliquer uniformément a tous les types de logs.",
+   "member_ids": [
+    "g2"
+   ]
+  }
+ ],
+ "participants": [
+  {
+   "canonical": "Locuteur 1",
+   "member_ids": [
+    "m1"
+   ]
+  },
+  {
+   "canonical": "Locuteur 2",
+   "member_ids": [
+    "m2"
+   ]
+  }
+ ],
+ "executive_summary": {
+  "objectives": [
+   "Faire le point sur les incidents de production de la semaine et arrêter les mesures correctives.",
+   "Examiner le dépassement du budget infrastructure et identifier des leviers de réduction.",
+   "Statuer sur la faisabilité de la mise en production de la version 2.4 à la date prévue."
+  ],
+  "main_topics": [
+   "Incidents de production et saturation des connexions PostgreSQL",
+   "Budget infrastructure et durée de rétention des logs",
+   "Mise en production de la version 2.4 et état de la chaîne d'intégration continue"
+  ],
+  "key_outcomes": [
+   "Deux mesures correctives sont arrêtées sur la base de données : pool de connexions porté à 300 cette semaine, création des index dimanche pendant la fenêtre de maintenance.",
+   "La réduction de la rétention des logs est suspendue à un avis du service juridique ; la bascule vers du stockage froid est engagée sans attendre.",
+   "La date de mise en production du 30 octobre n'est pas confirmée : la décision est reportee au point du jeudi, après un diagnostic de 48 heures de la chaîne d'intégration continue."
+  ]
+ },
+ "conclusion": {
+  "assessment": "La réunion a permis d'arreter des mesures correctives precises sur la base de données, dont la mise en œuvre est confiée a Thomas avec des echeances identifiées. Les deux autres sujets restent ouverts : le budget depend d'un avis juridique attendu sans date, et la mise en production ne peut pas être engagée tant que la chaîne d'intégration continue est en échec. Un désaccord sur la strategie de livraison a été exprimé mais n'a pas été tranché.",
+  "next_steps": [
+   "Mise en œuvre des correctifs base de données cette semaine et dimanche.",
+   "Diagnostic de la chaîne d'intégration continue sous 48 heures.",
+   "Point de suivi jeudi pour statuer sur la date de mise en production.",
+   "Appel au client pour l'informer que la date n'est pas confirmée."
+  ],
+  "attention_points": [
+   "La marge sur le SLA est faible : un nouvel incident ferait basculer l'engagement contractuel.",
+   "Le client a déjà communiqué la date du 30 octobre à ses utilisateurs.",
+   "Aucune échéance n'est maîtrisée sur la réponse du service juridique."
+  ]
+ }
+}
