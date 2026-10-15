@@ -9,3 +9,6 @@ frontend/dist/
 *.egg-info/
 test-results/
 exemples/
+
+# Archive de livraison, reconstruite au besoin
+assistant-reunions.tar.gz
