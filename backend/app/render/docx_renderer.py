@@ -367,7 +367,7 @@ def _footer(document: Document, model: ReportModel) -> None:
     paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     paragraph.paragraph_format.space_before = Pt(18)
     run = paragraph.add_run(
-        f"Généré le {model.generated_at.strftime('%d/%m/%Y a %H:%M')} "
+        f"Généré le {model.generated_at.strftime('%d/%m/%Y à %H:%M')} "
         f"— analyse : {model.llm_model or 'non précisée'}"
     )
     run.italic = True

@@ -244,7 +244,7 @@
  ],
  "decisions": [
   {
-   "statement": "Le pool de connexions PostgreSQL passe à 300 des cette semaine et les index manquants sont créés dimanche prochain pendant la fenêtre de maintenance.",
+   "statement": "Le pool de connexions PostgreSQL passe à 300 dès cette semaine et les index manquants sont créés dimanche prochain pendant la fenêtre de maintenance.",
    "rationale": "Traiter à la fois le dimensionnement du pool et la cause de fond que constituent les requêtes non indexées.",
    "stakeholders": [
     "Thomas"
@@ -257,7 +257,7 @@
    "quote": "on décide ça : le pool passe à 300 cette semaine et les index sont créés dimanche prochain pendant la fenêtre de maintenance"
   },
   {
-   "statement": "La décision sur la date de mise en production de la version 2.4 est reportee au point du jeudi.",
+   "statement": "La décision sur la date de mise en production de la version 2.4 est reportée au point du jeudi.",
    "rationale": "L'état de la chaîne d'intégration continue ne permet pas de se prononcer ; un diagnostic de 48 heures est nécessaire.",
    "stakeholders": [],
    "conditions": null,
@@ -421,7 +421,7 @@
  ],
  "open_questions": [
   {
-   "question": "Quelle durée de rétention s'applique reellement à chaque type de log, notamment aux logs d'accès au regard du RGPD ?",
+   "question": "Quelle durée de rétention s'applique réellement à chaque type de log, notamment aux logs d'accès au regard du RGPD ?",
    "kind": "a verifier",
    "segment_ids": [
     "s0016"
@@ -437,7 +437,7 @@
    "quote": "je n'ai pas encore identifié pourquoi"
   },
   {
-   "question": "La mise en production du 30 octobre est-elle maintenue, décalée, ou livree en périmètre reduit ?",
+   "question": "La mise en production du 30 octobre est-elle maintenue, décalée, ou livrée en périmètre réduit ?",
    "kind": "a reprendre",
    "segment_ids": [
     "s0027",
@@ -490,7 +490,7 @@
    "quote": "sortir avec une CI rouge c'est prendre le risque d'un quatrième incident"
   },
   {
-   "statement": "L'action sur la rétention des logs depend de la disponibilite du service juridique, sans échéance maîtrisée.",
+   "statement": "L'action sur la rétention des logs dépend de la disponibilité du service juridique, sans échéance maîtrisée.",
    "kind": "dependance",
    "segment_ids": [
     "s0018"

@@ -378,7 +378,7 @@ def render_summary(model: ReportModel, transcript: Transcript | None, target: Pa
 
 def _footer(model: ReportModel, styles: dict) -> Paragraph:
     return Paragraph(
-        f"Généré le {model.generated_at.strftime('%d/%m/%Y a %H:%M')} "
+        f"Généré le {model.generated_at.strftime('%d/%m/%Y à %H:%M')} "
         f"— analyse : {_escape(model.llm_model or 'non précisée')}",
         styles["footer"],
     )

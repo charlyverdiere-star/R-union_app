@@ -93,7 +93,7 @@ def action_row(action, segments_by_id: dict[str, Segment]) -> list[str]:
     aucun responsable ni aucune échéance n'est supposée."""
     return [
         action.task + (f" {TO_VERIFY}" if action.verification.status == "partiel" else ""),
-        action.owner or "non précise",
+        action.owner or "non précisé",
         action.due or "non précisée",
         COMMITMENT_LABELS.get(action.commitment, action.commitment),
         timecode_of(action, segments_by_id) or "",
@@ -181,13 +181,21 @@ def summary_sections(model: ReportModel, segments_by_id: dict[str, Segment]) -> 
     if model.risks:
         sections.append((
             "Points de vigilance",
-            [f"{r.statement} ({r.kind}){reference(r, segments_by_id)}" for r in model.risks],
+            [
+                f"{r.statement} ({RISK_LABELS.get(r.kind, r.kind)})"
+                f"{reference(r, segments_by_id)}"
+                for r in model.risks
+            ],
         ))
 
     if model.open_questions:
         sections.append((
             "Questions en suspens",
-            [q.question + reference(q, segments_by_id) for q in model.open_questions],
+            [
+                f"{q.question} ({QUESTION_LABELS.get(q.kind, q.kind)})"
+                f"{reference(q, segments_by_id)}"
+                for q in model.open_questions
+            ],
         ))
 
     if model.conclusion.next_steps:

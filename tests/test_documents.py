@@ -118,6 +118,27 @@ def test_synthese_est_courte_et_actionnable(reunion_analysee, tmp_path):
     assert len(contenu) < len(rapport) * 0.6, "la synthèse doit rester nettement plus courte"
 
 
+def test_synthese_affiche_des_libelles_lisibles(reunion_analysee, tmp_path):
+    """Les codes internes du modèle de données ne doivent jamais apparaître
+    dans un document destiné à être diffusé."""
+    _, transcription, modele, _ = reunion_analysee
+    contenu = texte_docx(docx_renderer.render_summary(modele, transcription, tmp_path / "s.docx"))
+    for code in ("(difficulte)", "(dependance)", "(probleme)",
+                 "(sans reponse)", "(a verifier)", "(a reprendre)",
+                 "non precise", "non precisee"):
+        assert code not in contenu, f"code interne affiché tel quel : {code}"
+    assert "dépendance" in contenu or "difficulté" in contenu or "risque" in contenu
+
+
+def test_documents_datent_en_francais(reunion_analysee, tmp_path):
+    _, transcription, modele, _ = reunion_analysee
+    contenu = texte_docx(docx_renderer.render_report(modele, transcription, tmp_path / "r.docx"))
+    assert "Généré le" in contenu
+    assert re.search(r"Généré le \d{2}/\d{2}/\d{4} à \d{2}:\d{2}", contenu), (
+        "la date de génération doit être lisible en français"
+    )
+
+
 # --- cohérence entre les deux documents --------------------------------------
 
 

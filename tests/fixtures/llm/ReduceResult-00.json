@@ -169,7 +169,7 @@
  ],
  "decisions": [
   {
-   "canonical": "Le pool de connexions PostgreSQL passe à 300 des cette semaine et les index manquants sont créés dimanche prochain pendant la fenêtre de maintenance.",
+   "canonical": "Le pool de connexions PostgreSQL passe à 300 dès cette semaine et les index manquants sont créés dimanche prochain pendant la fenêtre de maintenance.",
    "member_ids": [
     "d1"
    ]
@@ -181,7 +181,7 @@
    ]
   },
   {
-   "canonical": "La décision sur la date de mise en production de la version 2.4 est reportee au point du jeudi.",
+   "canonical": "La décision sur la date de mise en production de la version 2.4 est reportée au point du jeudi.",
    "member_ids": [
     "d2"
    ]
@@ -251,7 +251,7 @@
  ],
  "open_questions": [
   {
-   "canonical": "Quelle durée de rétention s'applique reellement à chaque type de log, notamment aux logs d'accès au regard du RGPD ?",
+   "canonical": "Quelle durée de rétention s'applique réellement à chaque type de log, notamment aux logs d'accès au regard du RGPD ?",
    "member_ids": [
     "q1"
    ]
@@ -263,7 +263,7 @@
    ]
   },
   {
-   "canonical": "La mise en production du 30 octobre est-elle maintenue, décalée, ou livree en périmètre reduit ?",
+   "canonical": "La mise en production du 30 octobre est-elle maintenue, décalée, ou livrée en périmètre réduit ?",
    "member_ids": [
     "q3"
    ]
@@ -301,7 +301,7 @@
    ]
   },
   {
-   "canonical": "L'action sur la rétention des logs depend de la disponibilite du service juridique, sans échéance maîtrisée.",
+   "canonical": "L'action sur la rétention des logs dépend de la disponibilité du service juridique, sans échéance maîtrisée.",
    "member_ids": [
     "r5"
    ]
@@ -349,7 +349,7 @@
   "key_outcomes": [
    "Deux mesures correctives sont arrêtées sur la base de données : pool de connexions porté à 300 cette semaine, création des index dimanche pendant la fenêtre de maintenance.",
    "La réduction de la rétention des logs est suspendue à un avis du service juridique ; la bascule vers du stockage froid est engagée sans attendre.",
-   "La date de mise en production du 30 octobre n'est pas confirmée : la décision est reportee au point du jeudi, après un diagnostic de 48 heures de la chaîne d'intégration continue."
+   "La date de mise en production du 30 octobre n'est pas confirmée : la décision est reportée au point du jeudi, après un diagnostic de 48 heures de la chaîne d'intégration continue."
   ]
  },
  "conclusion": {
